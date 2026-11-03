@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliQuiz AI - IT Engineering & AI-Powered Assessment Platform</title>
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js for High-Contrast Performance Visualizations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+
+    <!-- Notification Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar-wrapper">
+        <nav class="navbar">
+            <div class="logo-area" onclick="showSection('homeSection')">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">IntelliQuiz <span class="logo-badge">AI/ML</span></span>
+            </div>
+            
+            <div class="nav-links">
+                <button class="nav-btn active" data-sec="homeSection" onclick="showSection('homeSection')">Home</button>
+                <button class="nav-btn" data-sec="dashboardSection" onclick="showSection('dashboardSection')">Dashboard</button>
+                <button class="nav-btn" data-sec="createQuizSection" onclick="showSection('createQuizSection')">Create Quiz</button>
+                <button class="nav-btn" data-sec="analyticsSection" onclick="showSection('analyticsSection')">Analytics</button>
+                <button class="nav-btn" data-sec="historySection" onclick="showSection('historySection')">History</button>
+            </div>
+
+            <div class="nav-auth-area">
+                <button id="authNavBtn" class="btn-auth" onclick="showSection('loginSection')">Login</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+
+        <!-- 1. HOME SECTION -->
+        <section id="homeSection" class="active">
+            <div class="hero">
+                <div class="hero-badge"><strong>IntelliQuiz</strong> </div>
+                <h1 class="hero-title">Master IT Engineering With <span class="gradient-text">AI-Powered Assessment</span></h1>
+                <p class="hero-desc">
+                    Generate instant, high-quality multiple choice quizzes <!--using cutting-edge <strong>NLP</strong>, -->
+                    <!--<strong>TF-IDF Term Salience</strong>, and <strong>Cosine Similarity Vector Matching</strong>--> 
+                    from your syllabus notes or practice across verified IT engineering questions
+                </p>
+                <div class="hero-actions">
+                    <button class="btn-primary" onclick="showSection('createQuizSection')">
+                        <span>⚡ Generate Practice Quiz</span>
+                    </button>
+                    <button class="btn-secondary" onclick="showSection('registerSection')">
+                        <span>Join / Register Now</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Ribbon -->
+            <div class="stats-ribbon">
+                <div class="ribbon-item">
+                    <span class="ribbon-val">4,000+</span>
+                    <span class="ribbon-lbl">Verified IT Questions</span>
+                </div>
+                <div class="ribbon-item">
+                    <span class="ribbon-val">8 Topics</span>
+                    <span class="ribbon-lbl">DSA, DBMS, OS, AI/ML & More</span>
+                </div>
+                <div class="ribbon-item">
+                    <span class="ribbon-val">TF-IDF</span>
+                    <span class="ribbon-lbl">NLP Keyword Extraction</span>
+                </div>
+                <div class="ribbon-item">
+                    <span class="ribbon-val">100% Offline</span>
+                    <span class="ribbon-lbl">Self-Contained Engine</span>
+                </div>
+            </div>
+
+            <!-- Feature Cards Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>TF-IDF & NLP Question Generator</h3>
+                    <p>Upload lecture notes, textbook summaries, or syllabus PDFs. The algorithm extracts salient technical concepts and crafts conceptual questions with smart distractors.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>4,000 Question Predefined Bank</h3>
+                    <p>Structured topic coverage across Data Structures, DBMS, Operating Systems, Computer Networks, Cybersecurity, AI/ML, Software Engineering, and DevOps.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>High-Contrast Growth Analytics</h3>
+                    <p>Diagnostic learning analytics featuring high-contrast performance charts, subject mastery breakdown, and personalized AI revision recommendations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. LOGIN SECTION -->
+        <section id="loginSection">
+            <button class="btn-back" onclick="goBack()">← Back</button>
+            <div class="form-card">
+                <div class="form-header">
+                    <h2>Welcome Back</h2>
+                    <p class="subtitle">Log in to track your assessment analytics and test history.</p>
+                </div>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="student@university.edu" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="btn-primary full-width">Login to Account</button>
+                </form>
+
+                <div class="auth-footer-links">
+                    <a href="#" onclick="showSection('forgotPasswordSection')">Forgot Password?</a>
+                    <span class="auth-switch">Don't have an account? <a href="#" onclick="showSection('registerSection')">Register</a></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. FORGOT / RESET PASSWORD SECTION -->
+        <section id="forgotPasswordSection">
+            <button class="btn-back" onclick="goBack()">← Back</button>
+            <div class="form-card">
+                <div class="form-header">
+                    <h2>Reset Account Password</h2>
+                    <p class="subtitle">Enter your registered email and choose a new password.</p>
+                </div>
+                <form onsubmit="handleResetPassword(event)">
+                    <div class="form-group">
+                        <label for="resetEmail">Registered Email Address</label>
+                        <input type="email" id="resetEmail" placeholder="student@university.edu" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="resetNewPassword">New Password</label>
+                        <input type="password" id="resetNewPassword" placeholder="Enter new password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="resetConfirmPassword">Confirm New Password</label>
+                        <input type="password" id="resetConfirmPassword" placeholder="Confirm new password" required>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">Update Password</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 4. REGISTRATION SECTION -->
+        <section id="registerSection">
+            <button class="btn-back" onclick="goBack()">← Back</button>
+            <div class="form-card">
+                <div class="form-header">
+                    <h2>Create Student Account</h2>
+                    <p class="subtitle">Join IntelliQuiz to generate custom AI quizzes and track progress.</p>
+                </div>
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="regName">Full Name</label>
+                        <input type="text" id="regName" placeholder="e.g. Alex Johnson" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email Address</label>
+                        <input type="email" id="regEmail" placeholder="student@university.edu" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a password" required>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">Register Account</button>
+                </form>
+                <div class="auth-footer-links">
+                    <span class="auth-switch">Already registered? <a href="#" onclick="showSection('loginSection')">Login here</a></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. DASHBOARD SECTION -->
+        <section id="dashboardSection">
+            <!-- Dashboard Welcome Banner -->
+            <div class="dash-welcome-card">
+                <div class="dash-welcome-left">
+                    <div class="dash-avatar" id="dashAvatar">🎓</div>
+                    <div class="dash-welcome-text">
+                        <div class="dash-badge-row">
+                            <span class="dash-student-badge">Student Assessment Portal</span>
+                            <!--<span class="dash-status-badge" id="dashTierBadge">⚡ Status: Active</span>-->
+                        </div>
+                        <h2 id="dashGreetingTitle">Welcome Back, Student!</h2>
+                        <p class="subtitle" id="dashGreetingSub">Track your engineering mastery, review AI diagnostics, and launch targeted practice quizzes.</p>
+                    </div>
+                </div>
+                <div class="dash-welcome-actions">
+                    <button class="btn-primary" onclick="showSection('createQuizSection')">
+                        <span>⚡ Create Practice Quiz</span>
+                    </button>
+                    <button class="btn-secondary" onclick="quickLaunchCustomAI()">
+                        <span>🧠 Customized Quiz Generator</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 4 High-Contrast KPI Metric Cards -->
+            <div class="dash-metrics-grid">
+                <div class="dash-metric-card metric-blue">
+                    <div class="metric-top">
+                        <span class="metric-icon">📝</span>
+                        <span class="metric-label">Quizzes Taken</span>
+                    </div>
+                    <div class="metric-number" id="dashTotal">0</div>
+                    <div class="metric-sub">Completed assessments</div>
+                </div>
+
+                <div class="dash-metric-card metric-green">
+                    <div class="metric-top">
+                        <span class="metric-icon">🎯</span>
+                        <span class="metric-label">Average Accuracy</span>
+                    </div>
+                    <div class="metric-number" id="dashAvg">0%</div>
+                    <div class="metric-sub">Overall competency</div>
+                </div>
+
+                <div class="dash-metric-card metric-amber">
+                    <div class="metric-top">
+                        <span class="metric-icon">🏆</span>
+                        <span class="metric-label">Highest Score</span>
+                    </div>
+                    <div class="metric-number" id="dashHighest">0%</div>
+                    <div class="metric-sub">Personal record</div>
+                </div>
+
+                <div class="dash-metric-card metric-purple">
+                    <div class="metric-top">
+                        <span class="metric-icon">⚡</span>
+                        <span class="metric-label">Questions Solved</span>
+                    </div>
+                    <div class="metric-number" id="dashQuestions">0</div>
+                    <div class="metric-sub" id="dashQuestionsSub">Total questions attempted</div>
+                </div>
+            </div>
+
+            <!-- Two-Column Strategic Dashboard Layout -->
+            <div class="dash-content-grid">
+                <!-- Left Column (Main Diagnostic & Quick Launchers) -->
+                <div class="dash-col-main">
+                    <!-- AI Diagnostic Recommendation Box -->
+                    <div class="dash-ai-card">
+                        <div class="dash-ai-header">
+                            <div class="dash-ai-badge">
+                                <span class="ai-spark-icon">🧠</span>Diagnostic & Study Plan
+                            </div>
+                            <span class="ai-live-tag">Live Feedback</span>
+                        </div>
+                        <p id="dashRecommendation" class="dash-ai-text">Complete a practice quiz to generate personalized diagnostic feedback and targeted study recommendations.</p>
+                        <div class="dash-ai-tags-row" id="dashDiagnosticTags">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Quick Topic Practice Launchers -->
+                    <div class="dash-card">
+                        <div class="card-caption" style="margin-bottom: 1rem; padding-bottom: 0.75rem;">
+                            <h3>⚡ Quick Practice Launchers</h3>
+                            <p>Instantly launch a 5-question test for any IT engineering core subject.</p>
+                        </div>
+                        <div class="quick-launchers-grid">
+                            <div class="launcher-chip" onclick="quickLaunchSubject('DSA')">
+                                <span class="launcher-icon">🌲</span>
+                                <div class="launcher-info">
+                                    <strong>Data Structures</strong>
+                                    <small>Trees, Graphs, Sorting</small>
+                                </div>
+                                <span class="launcher-arrow">→</span>
+                            </div>
+
+                            <div class="launcher-chip" onclick="quickLaunchSubject('DBMS')">
+                                <span class="launcher-icon">🗄️</span>
+                                <div class="launcher-info">
+                                    <strong>Database Systems</strong>
+                                    <small>SQL, ACID, Normalization</small>
+                                </div>
+                                <span class="launcher-arrow">→</span>
+                            </div>
+
+                            <div class="launcher-chip" onclick="quickLaunchSubject('OS')">
+                                <span class="launcher-icon">⚙️</span>
+                                <div class="launcher-info">
+                                    <strong>Operating Systems</strong>
+                                    <small>Paging, Scheduling, Deadlocks</small>
+                                </div>
+                                <span class="launcher-arrow">→</span>
+                            </div>
+
+                            <div class="launcher-chip" onclick="quickLaunchSubject('Networks')">
+                                <span class="launcher-icon">🌐</span>
+                                <div class="launcher-info">
+                                    <strong>Computer Networks</strong>
+                                    <small>TCP/IP, OSI, Routing, DNS</small>
+                                </div>
+                                <span class="launcher-arrow">→</span>
+                            </div>
+
+                            <div class="launcher-chip" onclick="quickLaunchSubject('AI_ML')">
+                                <span class="launcher-icon">🤖</span>
+                                <div class="launcher-info">
+                                    <strong>AI & Machine Learning</strong>
+                                    <small>TF-IDF, Gradient Descent, CNNs</small>
+                                </div>
+                                <span class="launcher-arrow">→</span>
+                            </div>
+
+                            <div class="launcher-chip" onclick="quickLaunchSubject('Cybersecurity')">
+                                <span class="launcher-icon">🔒</span>
+                                <div class="launcher-info">
+                                    <strong>Cybersecurity</strong>
+                                    <small>Crypto, SQLi, PKI, Firewalls</small>
+                                </div>
+                                <span class="launcher-arrow">→</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column (Topic Competency Snapshot & Tips) -->
+                <div class="dash-col-side">
+                    <!-- Subject Mastery Snapshot Card -->
+                    <div class="dash-card">
+                        <div class="dash-card-header-flex">
+                            <h3>📊 Topic Competency Snapshot</h3>
+                            <button class="btn-text-action" onclick="showSection('analyticsSection')">View Charts →</button>
+                        </div>
+                        <div id="dashMasteryBars" class="dash-mini-mastery-list">
+                            <!-- Populated dynamically via JS -->
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">No test history recorded yet.</p>
+                        </div>
+                    </div>
+
+                    <!-- Study Strategy Pro-Tips Card -->
+                    <div class="dash-card dash-tips-card">
+                        <h3>💡 Smart Study Tips</h3>
+                        <ul class="dash-tips-list">
+                            <li><strong>TF-IDF Document Mode:</strong> Paste your exam syllabus or notes to practice custom conceptual recall questions.</li>
+                            <li><strong>Review Explanations:</strong> Analyze both correct and incorrect solution cards on your scorecard.</li>
+                            <li><strong>Target Weak Topics:</strong> Focus on subjects below 70% to boost your overall accuracy.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Quizzes Activity Table -->
+            <div class="dash-recent-activity-card">
+                <div class="dash-card-header-flex">
+                    <div>
+                        <h3>📜 Recent Assessment Activity</h3>
+                        <p class="subtitle" style="margin-bottom: 0;">Review your recent test results and score breakdown.</p>
+                    </div>
+                    <div class="dash-table-actions">
+                        <button class="btn-secondary" onclick="showSection('historySection')">All History</button>
+                        <button class="btn-primary" onclick="showSection('analyticsSection')">Growth Charts</button>
+                    </div>
+                </div>
+
+                <div class="history-table-wrapper" style="margin-top: 1rem; padding: 0.75rem;">
+                    <table class="history-table high-contrast-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Subject / Mode</th>
+                                <th>Score</th>
+                                <th>Accuracy</th>
+                                <th>Mastery Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashRecentTableBody">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. GENERATE QUIZ SECTION -->
+        <section id="createQuizSection">
+            <button class="btn-back" onclick="goBack()">← Back</button>
+            <div class="section-title-bar">
+                <h2>Quiz Configuration</h2>
+                <span class="badge-tag">Select Mode</span>
+            </div>
+
+            <div class="mode-selector">
+                <button id="btnModePredefined" class="mode-btn active" onclick="switchQuizMode('predefined')">
+                    <span class="mode-icon">📚</span>
+                    <span class="mode-text">
+                        <strong>Manual quiz generation</strong>
+                        <small>4,000 Questions across 8 IT Topics</small>
+                    </span>
+                </button>
+                <button id="btnModeCustom" class="mode-btn" onclick="switchQuizMode('custom')">
+                    <span class="mode-icon">🧠</span>
+                    <span class="mode-text">
+                        <strong>Custom Quiz Generator</strong>
+                        <small>NLP, TF-IDF & Vector Search</small>
+                    </span>
+                </button>
+            </div>
+
+            <!-- Mode A: Predefined Topic Bank -->
+            <div id="predefinedModeBox" class="quiz-config-card">
+                <div class="card-caption">
+                    <h3>Configure Engineering Practice Quiz</h3>
+                    <p>Select your topic, subtopic focus, and test parameters from our curated bank.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="topicSelect">Engineering Subject</label>
+                    <select id="topicSelect" onchange="updateSubtopics()">
+                        <option value="DSA" selected>Data Structures & Algorithms (DSA)</option>
+                        <option value="DBMS">Database Management Systems (DBMS)</option>
+                        <option value="Networks">Computer Networks</option>
+                        <option value="OS">Operating Systems (OS)</option>
+                        <option value="AI_ML">Machine Learning & AI Concepts</option>
+                        <option value="Cybersecurity">Cybersecurity & Cryptography</option>
+                        <option value="Software Eng">Software Engineering & Architecture</option>
+                        <option value="DevOps_Cloud">DevOps & Cloud Computing</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="subtopicSelect">Category / Subtopic Focus</label>
+                    <select id="subtopicSelect">
+                        <option value="all">All Topics (Comprehensive)</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="numQuestions">Number of Questions</label>
+                        <select id="numQuestions">
+                            <option value="5" selected>5 Questions</option>
+                            <option value="10">10 Questions</option>
+                            <option value="15">15 Questions</option>
+                            <option value="20">20 Questions</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group half">
+                        <label for="difficultySelect">Difficulty Level</label>
+                        <select id="difficultySelect">
+                            <option value="easy">Easy (Foundations)</option>
+                            <option value="medium" selected>Medium (Standard)</option>
+                            <option value="hard">Hard (Advanced)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="timeLimitSelect">Timer Mode (Countdown)</label>
+                    <select id="timeLimitSelect">
+                        <option value="0" selected>No Time Limit (Self-paced)</option>
+                        <option value="30">30 Seconds / Question</option>
+                        <option value="60">60 Seconds / Question</option>
+                        <option value="300">5 Minutes Total Quiz</option>
+                        <option value="600">10 Minutes Total Quiz</option>
+                    </select>
+                </div>
+
+                <button class="btn-primary full-width" onclick="prepareQuiz('predefined')">
+                    <span>⚡ Generate Predefined Quiz</span>
+                </button>
+            </div>
+
+            <!-- Mode B: Custom File/Text Upload via AI (NLP & TF-IDF) -->
+            <div id="customModeBox" class="quiz-config-card hidden">
+                <div class="card-caption">
+                    <h3>AI-Powered Custom Question Generation</h3>
+                    <p>Provide lecture notes, textbook passages, or syllabus PDFs to generate instant assessment questions using NLP and TF-IDF salience scoring.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="aiModeSelect">AI Generation Algorithm</label>
+                    <select id="aiModeSelect">
+                        <option value="tfidf_nlp" selected>🧠 TF-IDF Salience Extraction + Linguistic Pattern Matching</option>
+                        <option value="hybrid">⚡ Hybrid AI Pipeline (TF-IDF Extraction + Vector Space Retrieval)</option>
+                        <option value="semantic_search">🔍 Vector Space Model (VSM) & Cosine Similarity Match</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="aiDomainSelect">Domain Knowledge Context</label>
+                    <select id="aiDomainSelect">
+                        <option value="general" selected>General Computer Science & IT</option>
+                        <option value="dsa">Data Structures & Algorithms</option>
+                        <option value="dbms">Database Systems & SQL</option>
+                        <option value="os">Operating Systems</option>
+                        <option value="networks">Computer Networks</option>
+                        <option value="ai_ml">Artificial Intelligence & Machine Learning</option>
+                        <option value="cybersecurity">Cybersecurity</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="label-with-action">
+                        <label for="textInput">Paste Syllabus, Notes, or Study Text</label>
+                        <button type="button" class="btn-text-action" onclick="loadSampleText()">Load Sample Academic Notes</button>
+                    </div>
+                    <textarea id="textInput" placeholder="Paste your technical study notes, concept summaries, or definitions here (minimum 2-3 substantive sentences)..." oninput="updateCharCount()"></textarea>
+                    <div class="char-count-bar">
+                        <span id="charCountDisplay">0 characters • 0 words</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fileInput">Or Upload Document File (.pdf / .txt / .doc / .md)</label>
+                    <div class="file-upload-box">
+                        <input type="file" id="fileInput" accept=".txt,.pdf,.doc,.docx,.md" onchange="handleFileSelected(event)">
+                        <div class="upload-hint" id="fileUploadHint">
+                            <span class="upload-icon">📄</span>
+                            <span>Click to choose or drag & drop a PDF / Text file</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="aiNumQuestions">Number of Questions</label>
+                        <select id="aiNumQuestions">
+                            <option value="3">3 Questions</option>
+                            <option value="5" selected>5 Questions</option>
+                            <option value="10">10 Questions</option>
+                            <option value="15">15 Questions</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group half">
+                        <label for="aiDifficulty">Target Difficulty</label>
+                        <select id="aiDifficulty">
+                            <option value="easy">Easy (Definitions)</option>
+                            <option value="medium" selected>Medium (Standard)</option>
+                            <option value="hard">Hard (Conceptual Deep-Dive)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="aiTimerSelect">Timer Mode</label>
+                    <select id="aiTimerSelect">
+                        <option value="0" selected>No Time Limit (Self-paced)</option>
+                        <option value="30">30 Seconds / Question</option>
+                        <option value="60">60 Seconds / Question</option>
+                        <option value="300">5 Minutes Total Quiz</option>
+                    </select>
+                </div>
+
+                <button id="btnGenerateAI" class="btn-primary full-width" onclick="prepareQuiz('custom')">
+                    <span>🧠 Generate Quiz with AI Engine</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 7. INSTRUCTIONS SECTION -->
+        <section id="instructionsSection">
+            <button class="btn-back" onclick="goBack()">← Back</button>
+            <div class="instructions-card">
+                <div class="instructions-header">
+                    <h2>Quiz Overview & Instructions</h2>
+                    <p class="subtitle">Please review test parameters before initiating your assessment.</p>
+                </div>
+
+                <div class="quiz-preview-info">
+                    <div class="preview-metric">
+                        <span class="prev-lbl">Subject Focus</span>
+                        <strong id="instTopic" class="prev-val">DSA</strong>
+                    </div>
+                    <div class="preview-metric">
+                        <span class="prev-lbl">Questions</span>
+                        <strong id="instCount" class="prev-val">5</strong>
+                    </div>
+                    <div class="preview-metric">
+                        <span class="prev-lbl">Difficulty</span>
+                        <strong id="instDifficulty" class="prev-val">Medium</strong>
+                    </div>
+                    <div class="preview-metric">
+                        <span class="prev-lbl">Time Limit</span>
+                        <strong id="instTimer" class="prev-val">No Limit</strong>
+                    </div>
+                </div>
+
+                <div class="instructions-list">
+                    <div class="inst-item">
+                        <span class="inst-icon">✔</span>
+                        <div><strong>Read Thoroughly:</strong> Each question is synthesized or retrieved based on strict academic standards.</div>
+                    </div>
+                    <div class="inst-item">
+                        <span class="inst-icon">✔</span>
+                        <div><strong>Active Navigation:</strong> Use the Question Navigator pills to jump between questions or review your answers.</div>
+                    </div>
+                    <div class="inst-item">
+                        <span class="inst-icon">✔</span>
+                        <div><strong>Immediate Explanations:</strong> Comprehensive answer rationale will be provided upon submission.</div>
+                    </div>
+                    <div class="inst-item">
+                        <span class="inst-icon">✔</span>
+                        <div><strong>Performance Tracking:</strong> Your score will update your growth analytics and subject mastery matrix.</div>
+                    </div>
+                </div>
+
+                <button class="btn-primary full-width btn-large" onclick="startQuiz()">
+                    <span>🚀 Begin Quiz Now</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 8. LIVE QUIZ SECTION -->
+        <section id="quizSection">
+            <div class="quiz-top-bar">
+                <div class="quiz-meta-info">
+                    <h2 id="quizTopicTitle">IT Practice Test</h2>
+                    <span id="quizAlgorithmBadge" class="algo-pill hidden">TF-IDF NLP</span>
+                </div>
+                <div class="quiz-timer-container">
+                    <div id="quizTimer" class="timer-badge">⏱️ Time: --:--</div>
+                </div>
+            </div>
+
+            <!-- Quiz Progress Bar -->
+            <div class="progress-bar-container">
+                <div class="progress-bar-track">
+                    <div id="quizProgressBar" class="progress-bar-fill" style="width: 0%;"></div>
+                </div>
+                <div class="progress-labels">
+                    <span id="quizProgressLabel">Question 1 of 5</span>
+                    <span id="quizPercentLabel">0% Completed</span>
+                </div>
+            </div>
+
+            <!-- NLP Metadata Panel (Visible when generated from custom text/document) -->
+            <div id="nlpMetricsPanel" class="nlp-metrics-card hidden">
+                <div class="nlp-card-header">
+                    <span>🧠 AI / NLP Generation Metadata</span>
+                    <span id="nlpReadabilityBadge" class="badge-tag">Readability: Good</span>
+                </div>
+                <div class="nlp-keywords-row">
+                    <span class="nlp-kw-label">Extracted TF-IDF Key Concepts:</span>
+                    <div id="nlpKeywordsPills" class="nlp-pills-wrap"></div>
+                </div>
+            </div>
+
+            <!-- Question Navigator Pills -->
+            <div class="question-navigator" id="questionNavPills"></div>
+
+            <!-- Active Question Container -->
+            <div id="quizContainer" class="quiz-container-box"></div>
+
+            <!-- Quiz Navigation Controls -->
+            <div class="quiz-controls-row">
+                <button id="btnPrevQuestion" class="btn-secondary" onclick="navigateQuestion(-1)">← Previous</button>
+                <button class="btn-secondary btn-outline" onclick="clearCurrentSelection()">Clear Selection</button>
+                <button id="btnNextQuestion" class="btn-secondary" onclick="navigateQuestion(1)">Next →</button>
+                <button id="btnSubmitQuiz" class="btn-primary" onclick="submitQuiz()">Submit Quiz Answers</button>
+            </div>
+        </section>
+
+        <!-- 9. SCORECARD & REVIEW SECTION -->
+        <section id="scorecardSection">
+            <div class="scorecard-hero">
+                <div class="score-circle-container">
+                    <div class="score-circle" id="scoreCircle">
+                        <span id="scorePercentage" class="score-percentage-text">0%</span>
+                        <span class="score-grade-badge" id="scoreGradeBadge">A+</span>
+                    </div>
+                </div>
+                <div class="scorecard-summary-info">
+                    <h2 id="scoreTitle">Assessment Completed!</h2>
+                    <p id="scoreSummary" class="score-summary-text">Score: 0 / 0 Questions Correct</p>
+                    <p id="scoreVerdict" class="score-verdict-text">Outstanding performance! Keep up the momentum.</p>
+                </div>
+            </div>
+
+            <div class="scorecard-actions">
+                <button class="btn-primary" onclick="showSection('analyticsSection')">📈 View Contrast Analytics Report</button>
+                <button class="btn-secondary" onclick="showSection('createQuizSection')">⚡ Take Another Quiz</button>
+                <button class="btn-secondary" onclick="showSection('historySection')">📜 View History</button>
+            </div>
+
+            <div class="review-header">
+                <h3>Detailed Question-by-Question Review</h3>
+                <p class="subtitle">Review correct solutions and deep-dive technical explanations.</p>
+            </div>
+
+            <div id="reviewContainer" class="review-cards-list"></div>
+        </section>
+
+        <!-- 10. HIGH-CONTRAST PERFORMANCE & GROWTH ANALYTICS -->
+        <section id="analyticsSection">
+            <div class="analytics-header">
+                <div>
+                    <button class="btn-back" onclick="goBack()">← Back</button>
+                    <h2>Performance & Learning Analytics</h2>
+                    <p class="subtitle">High-contrast diagnostic breakdown of subject mastery, accuracy curves, and study recommendations.</p>
+                </div>
+                <div class="analytics-badge-tag">
+                    <span class="contrast-dot"></span> High-Contrast View
+                </div>
+            </div>
+
+            <!-- High-Contrast KPI Cards -->
+            <div class="analytics-kpi-grid">
+                <div class="kpi-card kpi-blue">
+                    <span class="kpi-label">Total Quizzes Taken</span>
+                    <span class="kpi-val" id="anTotalQuizzes">0</span>
+                    <span class="kpi-sub">Tests recorded</span>
+                </div>
+                <div class="kpi-card kpi-green">
+                    <span class="kpi-label">Average Score</span>
+                    <span class="kpi-val" id="anAvgScore">0%</span>
+                    <span class="kpi-sub">Overall accuracy</span>
+                </div>
+                <div class="kpi-card kpi-amber">
+                    <span class="kpi-label">Highest Score</span>
+                    <span class="kpi-val" id="anHighestScore">0%</span>
+                    <span class="kpi-sub">Personal record</span>
+                </div>
+                <div class="kpi-card kpi-purple">
+                    <span class="kpi-label">Questions Attempted</span>
+                    <span class="kpi-val" id="anTotalQuestions">0</span>
+                    <span class="kpi-sub" id="anQuestionsCorrect">0 correct answers</span>
+                </div>
+            </div>
+
+            <!-- Charts Row 1: Line Chart (Growth Curve) & Doughnut Chart (Accuracy) -->
+            <div class="charts-row">
+                <div class="chart-box main-chart">
+                    <div class="chart-header">
+                        <h3>📈 Score Progression Curve</h3>
+                        <span class="chart-legend-badge">Accuracy Over Tests (%)</span>
+                    </div>
+                    <div class="chart-canvas-wrapper">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-box side-chart">
+                    <div class="chart-header">
+                        <h3>🎯 Accuracy Distribution</h3>
+                        <span class="chart-legend-badge">Correct vs Incorrect</span>
+                    </div>
+                    <div class="chart-canvas-wrapper doughnut-wrapper">
+                        <canvas id="accuracyDoughnutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row 2: Subject Mastery Bar Chart -->
+            <div class="chart-box full-chart">
+                <div class="chart-header">
+                    <h3>📊 Subject Mastery & Topic Competency</h3>
+                    <span class="chart-legend-badge">Average Accuracy by Engineering Topic</span>
+                </div>
+                <div class="chart-canvas-wrapper bar-wrapper">
+                    <canvas id="subjectBarChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Subject Mastery Progress Grid -->
+            <div class="mastery-section">
+                <h3>Topic Competency Breakdown</h3>
+                <div id="subjectMasteryGrid" class="subject-mastery-grid"></div>
+            </div>
+
+            <!-- AI Diagnostic Knowledge Recommendation -->
+            <div class="ai-box high-contrast-ai-box">
+                <div class="ai-box-badge">🧠 AI Diagnostic & Knowledge Recommendation</div>
+                <p id="analyticsDiagnostic" class="ai-box-text">Take more assessments to generate comprehensive learning curve analytics.</p>
+                <div class="ai-diagnostic-tags" id="aiDiagnosticTags"></div>
+            </div>
+
+            <!-- Recent Quizzes Performance Table -->
+            <div class="history-table-wrapper">
+                <h3>Recent Assessment Log</h3>
+                <table class="history-table high-contrast-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Topic</th>
+                            <th>Score</th>
+                            <th>Percentage</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="analyticsTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 11. QUIZ HISTORY SECTION -->
+        <section id="historySection">
+            <button class="btn-back" onclick="goBack()">← Back</button>
+            <div class="section-title-bar">
+                <h2>Student Quiz History</h2>
+                <div class="filter-box">
+                    <label for="historyTopicFilter">Filter by Subject:</label>
+                    <select id="historyTopicFilter" onchange="filterHistoryTable()">
+                        <option value="all">All Subjects</option>
+                        <option value="DSA">Data Structures</option>
+                        <option value="DBMS">DBMS</option>
+                        <option value="Networks">Networks</option>
+                        <option value="OS">Operating Systems</option>
+                        <option value="AI_ML">AI & ML</option>
+                        <option value="Cybersecurity">Cybersecurity</option>
+                        <option value="Software Eng">Software Engineering</option>
+                        <option value="DevOps_Cloud">DevOps & Cloud</option>
+                        <option value="Document AI Assessment">Document AI Assessment</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="history-table-wrapper">
+                <table class="history-table high-contrast-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Subject / Assessment Mode</th>
+                            <th>Score</th>
+                            <th>Percentage</th>
+                            <th>Mastery Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p><strong>IntelliQuiz AI</strong> — IT Engineering Assessment Platform • AI/ML Mini Project</p>
+            <p class="footer-sub">Engineered with TF-IDF Keyword Salience, Cosine Similarity Vector Space Models & SQLite</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
